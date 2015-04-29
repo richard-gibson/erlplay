@@ -1,0 +1,12 @@
+{application, erlplay,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { erlplay_app, []}},
+  {env, []}
+ ]}.
