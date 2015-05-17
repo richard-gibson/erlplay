@@ -49,5 +49,9 @@ crashlytics-build.properties
 
 # rebar dependencies
 deps
+.rebar
+ebin
+erlplay_database
+
 
 
