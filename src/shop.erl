@@ -12,18 +12,26 @@
 %% API
 -export([cost/1, total/3, totalPerItemType/1, totalPerItemTypeWithTax/2]).
 
--define(MCOST,#{
-        oranges  => 1,
-        newspaper=> 2,
-        apples   => 3,
-        pears    => 5,
-        milk     => 4
-    }).
+%% -define(MCOST,#{
+%%         oranges  => 1,
+%%         newspaper=> 2,
+%%         apples   => 3,
+%%         pears    => 5,
+%%         milk     => 4
+%%     }).
+
+-define(MCOST,[
+  {oranges,1},
+  {newspaper,2},
+  {apples,3},
+  {pears,5},
+  {milk,4}
+]).
 
 cost(Lookup) ->
 %%     unable to pattern match when key is a variable
 %%     ie #{Lookup := V } = mcost(),
-  case maps:get(Lookup,?MCOST) of
+  case orddict:find(Lookup,?MCOST) of
       {ok,E} -> E;
       {error} -> 0
     end.
