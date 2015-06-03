@@ -10,7 +10,7 @@
 -author("richard").
 
 %% API
--export([qsort/1, zip/2, consult/1]).
+-export([qsort/1, zip/2, consult/1, my_tuple_to_list/1, max_funs/1]).
 
 qsort([]) -> [];
 qsort([Pivot|T]) -> qsort([X||X <- T,X<Pivot])
@@ -43,3 +43,27 @@ consultl(S) ->
     {ok, Term}  -> [Term|consultl(S)];
     Error     -> Error
 end.
+
+my_tuple_to_list(T) ->
+  my_tuple_to_list(T,1,size(T)).
+my_tuple_to_list(T, N, Size) when N =< Size ->
+  [element(N,T) | my_tuple_to_list(T, N+1, Size)];
+my_tuple_to_list(_T, _N, _Size) -> [].
+
+
+no_funs({M, _}) ->
+  {M,length(M:module_info(exports))}.
+
+max_funs(Modules) ->
+  ModuleFunctionCnt = lists:map(fun no_funs/1, Modules),
+  [Zero|_] = ModuleFunctionCnt,
+
+  lists:foldl(
+    fun({M, Size},Acc) ->
+      case Size =< Acc of
+        true -> Acc;
+        false -> {M, Size}
+      end
+    end,
+    Zero,
+    ModuleFunctionCnt).
